@@ -4,6 +4,7 @@
 <br>
 ## 情報収集
 まずはポートスキャンを行い、アクセスできるサービスがないかを探します。
+![portscan](https://github.com/sota70/PC-Easy-Writeup/assets/46929379/01c3fb71-aa95-4030-a776-2752a469d81d)
 そうすると、22番ポート(SSH)と50051番ポートが開いているのか分かります。
 50051番ポートはgRPCという、Proto RequestとProto Responseの２つのメッセージで通信を行う
 プロトコルのデフォルトポートです。
