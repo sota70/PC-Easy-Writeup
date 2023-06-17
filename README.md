@@ -10,7 +10,7 @@
 <br>
 <br>
 ### gRPCへアクセス
-gRPCが怪しいので、gRPCUIというツール(https://github.com/fullstorydev/grpcui)を使って
+gRPCが怪しいので、gRPCUIというツール(<https://github.com/fullstorydev/grpcui>)を使って
 中身を見てみます。
 そうすると、gRPCプロトコル経由でアカウントの登録、ログイン、アカウント情報取得ができることが分かります。
 ここでは、既にadminアカウントがadminというパスワードで登録されていました。
@@ -31,14 +31,14 @@ sauのアカウントでSSH接続することができました。
 ですが、利用できるファイルが見つからなかったので、次はローカルで動いてるサービスが無いか確認してみます。
 そうすると、pyLoadというサービスが見つかりました。pyLoadはさらに、rootでサービスを動かしていました。
 これは権限昇格に使えそうです。このサービス内で利用できそうな脆弱性を探してみると
-command injectionの脆弱性が見つかりました(https://github.com/bAuh0lz/CVE-2023-0297_Pre-auth_RCE_in_pyLoad)
+command injectionの脆弱性が見つかりました(<https://github.com/bAuh0lz/CVE-2023-0297_Pre-auth_RCE_in_pyLoad>)
 <br>
 <br>
 ## 攻撃スクリプトの作成
 pyLoadの脆弱性を利用した攻撃では、reverse-shellを使います。今回は２つのスクリプトを作ります。
 1つ目のスクリプトはpyLoadに/tmp/exploit.shを実行させるスクリプトです。
 ２つ目のスクリプトは自分のPCで動かしているC2サーバーにアクセスさせるスクリプトです。
-今回はC2サーバーにVillain(https://github.com/t3l3machus/Villain)を使っています。
+今回はC2サーバーにVillain(<https://github.com/t3l3machus/Villain>)を使っています。
 <br>
 <br>
 ## 侵入2
